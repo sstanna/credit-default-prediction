@@ -10,18 +10,18 @@ Implemented end-to-end automated pipeline for development, testing, deployment a
 
 ## Completed Requirements
 
-### âœ… 1. Code Organization and Version Control (Git) - 3 points
+###  1. Code Organization and Version Control (Git) 
 - Created structured project structure following cookiecutter-data-science standard
 - Code organized in modules: src/, tests/, notebooks/, data/, models/
 - Prepared meaningful commits for Git
 
-### âœ… 2. Data Preparation and Validation - 7 points
+###  2. Data Preparation and Validation
 - Data loading and preprocessing scripts implemented
 - Feature Engineering: aggregated features from payment history, age binning
 - Data validation with Great Expectations suite
 - Tests for data validation that fail on anomalies
 
-### âœ… 3. Model Building and Tuning - 8 points
+###  3. Model Building and Tuning 
 - Data split into train/test sets
 - Sklearn Pipeline with preprocessing (Imputer, Scaler, OneHotEncoder)
 - Model training (LogisticRegression, RandomForestClassifier, GradientBoostingClassifier)
@@ -29,38 +29,38 @@ Implemented end-to-end automated pipeline for development, testing, deployment a
 - Key metrics calculated: ROC-AUC, Precision, Recall, F1-Score
 - ROC curve visualization
 
-### âœ… 4. Experimentation and Logging - 8 points
+###  4. Experimentation and Logging 
 - MLflow Tracking integrated into training code
 - Logged parameters, metrics, artifacts (including ROC curve and trained model)
 - Conducted 5+ experiments with different algorithms and hyperparameters
 - MLflow UI available for experiment analysis
 
-### âœ… 5. Data and Model Versioning - 5 points
+### âœ… 5. Data and Model Versioning 
 - DVC initialized in repository
 - DVC configured for dataset and model versioning
 - Configuration described in dvc.yaml
 - DVC pipeline implemented with prepare and train stages
 
-### âœ… 6. Testing and CI - 7 points
+### âœ… 6. Testing and CI 
 - Unit tests written with pytest for key functions
 - GitHub Actions configured for automatic test runs
 - Code quality checks: linting with flake8 and formatting with black
 - CI pipeline includes data validation step with Great Expectations
 
-### âœ… 7. Containerization and Deployment - 7 points
+### âœ… 7. Containerization and Deployment 
 - Dockerfile created for application containerization
 - Simple REST API implemented with FastAPI
 - API has /predict endpoint accepting JSON features and returning predictions
 - Docker build and run scripts prepared
 - API tested and working locally
 
-### âœ… 8. Monitoring (Drift) - 3 points
+###  8. Monitoring (Drift)
 - Simple Python script for data drift monitoring
 - Population Stability Index (PSI) calculation implemented
 - Script compares new data with training data
 - Drift metrics calculated for key features
 
-### âœ… 9. Documentation - 2 points
+###  9. Documentation 
 - Clear README.md describing project structure and launch instructions
 - Comprehensive project documentation
 
@@ -128,9 +128,7 @@ credit-default-prediction/
 5. **Documentation:** Clear instructions and project structure
 6. **Version Control:** Proper Git workflow and DVC integration
 
-## Author
 
-ML Engineer - Credit Department (sstanna)
 
 ## Submission
 
