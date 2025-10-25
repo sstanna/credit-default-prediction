@@ -32,7 +32,7 @@
 
 ### 1. ÐšÐ»Ð¾Ð½Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ñ€ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð¾Ñ€Ð¸Ñ
 ``bash
-git clone <repository-url>
+git clone https://github.com/sstanna/credit-default-prediction.git
 cd credit-default-prediction
 ``
 
@@ -41,34 +41,37 @@ cd credit-default-prediction
 pip install -r requirements.txt
 ``
 
-### 3. Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ DVC
-``bash
-dvc init
-``
-
-### 4. Ð—Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° Ð¸ Ð¿Ð¾Ð´Ð³Ð¾Ñ‚Ð¾Ð²ÐºÐ° Ð´Ð°Ð½Ð½Ñ‹Ñ…
+### 3. ÐŸÐ¾Ð´Ð³Ð¾Ñ‚Ð¾Ð²ÐºÐ° Ð´Ð°Ð½Ð½Ñ‹Ñ…
 ``bash
 python -m src.data.load_data
 ``
 
-### 5. ÐžÐ±ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¼Ð¾Ð´ÐµÐ»Ð¸
+### 4. ÐžÐ±ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¼Ð¾Ð´ÐµÐ»Ð¸
 ``bash
-python -m src.models.train
+python scripts/train_models.py
 ``
 
-### 6. Ð—Ð°Ð¿ÑƒÑÐº API
+### 5. Ð—Ð°Ð¿ÑƒÑÐº API
 ``bash
-# Ð›Ð¾ÐºÐ°Ð»ÑŒÐ½Ð¾
+python scripts/run_api.py
+# Ð¸Ð»Ð¸
 uvicorn src.api.app:app --host 0.0.0.0 --port 8000
-
-# Ð’ Docker
-docker build -t credit-default-api .
-docker run -p 8000:8000 credit-default-api
 ``
 
-### 7. Ð—Ð°Ð¿ÑƒÑÐº Ñ‚ÐµÑÑ‚Ð¾Ð²
+### 6. Ð—Ð°Ð¿ÑƒÑÐº Ñ‚ÐµÑÑ‚Ð¾Ð²
 ``bash
 pytest tests/ -v
+``
+
+### 7. ÐœÐ¾Ð½Ð¸Ñ‚Ð¾Ñ€Ð¸Ð½Ð³ Ð´Ñ€Ð¸Ñ„Ñ‚Ð°
+``bash
+python scripts/monitor_drift.py
+``
+
+### 8. Docker Ð·Ð°Ð¿ÑƒÑÐº
+``bash
+docker build -t credit-default-api .
+docker run -p 8000:8000 credit-default-api
 ``
 
 ## ÐšÐ¾Ð¼Ð¿Ð¾Ð½ÐµÐ½Ñ‚Ñ‹ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð°
@@ -181,9 +184,18 @@ flake8 src tests
 black src tests
 ``
 
+## Ð ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ñ‹
+
+- **Ð”Ð°Ñ‚Ð°ÑÐµÑ‚:** 30,000 Ð·Ð°Ð¿Ð¸ÑÐµÐ¹ ÑƒÑÐ¿ÐµÑˆÐ½Ð¾ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ð½Ñ‹
+- **Ð¦ÐµÐ»ÐµÐ²Ð°Ñ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ð°Ñ:** 22.12% Ð´ÐµÑ„Ð¾Ð»Ñ‚Ð¾Ð² (6,636 Ð¸Ð· 30,000)
+- **Feature Engineering:** 4 Ð½Ð¾Ð²Ñ‹Ñ… Ð¿Ñ€Ð¸Ð·Ð½Ð°ÐºÐ° ÑÐ¾Ð·Ð´Ð°Ð½Ñ‹
+- **ÐœÐ¾Ð´ÐµÐ»Ð¸:** 3 Ð°Ð»Ð³Ð¾Ñ€Ð¸Ñ‚Ð¼Ð° Ð¾Ð±ÑƒÑ‡ÐµÐ½Ñ‹ Ñ Ð³Ð¸Ð¿ÐµÑ€Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð°Ð¼Ð¸
+- **API:** REST API Ð³Ð¾Ñ‚Ð¾Ð² Ðº Ð¿Ñ€Ð¾Ð´Ð°ÐºÑˆÐ½ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸ÑŽ
+- **ÐœÐ¾Ð½Ð¸Ñ‚Ð¾Ñ€Ð¸Ð½Ð³:** PSI Ð´Ñ€Ð¸Ñ„Ñ‚ Ð´ÐµÑ‚ÐµÐºÑ‚Ð¾Ñ€ Ñ€ÐµÐ°Ð»Ð¸Ð·Ð¾Ð²Ð°Ð½
+
 ## ÐÐ²Ñ‚Ð¾Ñ€
 
-ML Engineer - Credit Department
+ML Engineer - Credit Department (sstanna)
 
 ## Ð›Ð¸Ñ†ÐµÐ½Ð·Ð¸Ñ
 
