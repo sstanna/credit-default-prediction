@@ -1,0 +1,16 @@
+﻿stages:
+  prepare:
+    cmd: python -m src.data.load_data
+    deps:
+      - src/data/load_data.py
+      - data/raw/credit_card_default.xls
+    outs:
+      - data/processed/credit_card_default.parquet
+  
+  train:
+    cmd: python -m src.models.train
+    deps:
+      - src/models/train.py
+      - data/processed/credit_card_default.parquet
+    outs:
+      - models/logistic_regression_model.pkl

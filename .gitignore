@@ -1,0 +1,72 @@
+﻿.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Data
+data/raw/*.xls
+data/raw/*.xlsx
+data/raw/*.csv
+data/processed/*.parquet
+data/processed/*.csv
+
+# Models
+models/*.pkl
+models/*.h5
+models/*.pt
+mlruns/
+mlartifacts/
+
+# DVC
+.dvc/
+.dvc/cache
+.dvc/tmp
+
+# Great Expectations
+great_expectations/uncommitted/
+*.log
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.tar
