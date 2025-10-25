@@ -1,116 +1,107 @@
-﻿# Credit Default Prediction Pipeline
+Credit Default Prediction Pipeline
 
-Automated ML pipeline for credit default prediction (PD model).
+Автоматизированный ML-конвейер для прогнозирования дефолта по кредитам (PD-модель)
 
-## Project Description
+Описание проекта
 
-This project implements an end-to-end automated pipeline for development, testing, deployment and monitoring of machine learning models for predicting client default probability.
+Этот проект реализует сквозной автоматизированный конвейер для разработки, тестирования, деплоя и мониторинга моделей машинного обучения, предназначенных для прогнозирования вероятности дефолта клиента.
 
-**Domain:** Finance / Credit Scoring  
-**Dataset:** Default of Credit Card Clients Dataset from UCI Machine Learning Repository
+Область применения: Финансы / Кредитный скоринг
+Источник данных: Default of Credit Card Clients Dataset (UCI Machine Learning Repository)
 
-## Project Structure
+Структура проекта
+credit-default-prediction/
+├── data/                   # Данные (сырые, обработанные)
+├── models/                 # Обученные модели
+├── notebooks/              # Jupyter-ноутбуки для EDA
+├── src/                    # Исходный код
+│   ├── data/               # Модули обработки данных
+│   ├── models/             # Модули обучения моделей
+│   ├── api/                # Приложение FastAPI
+│   └── monitoring/         # Модули мониторинга
+├── tests/                  # Тесты
+├── scripts/                # Скрипты запуска
+├── .github/workflows/      # GitHub Actions (CI/CD)
+├── dvc.yaml                # DVC-конвейер
+├── Dockerfile              # Конфигурация Docker
+└── requirements.txt        # Зависимости
 
-`
-â”œâ”€â”€ data/                   # Data (raw, processed)
-â”œâ”€â”€ models/                 # Trained models
-â”œâ”€â”€ notebooks/              # Jupyter notebooks for EDA
-â”œâ”€â”€ src/                    # Source code
-â”‚   â”œâ”€â”€ data/              # Data processing modules
-â”‚   â”œâ”€â”€ models/            # Model training modules
-â”‚   â”œâ”€â”€ api/               # FastAPI application
-â”‚   â””â”€â”€ monitoring/        # Monitoring modules
-â”œâ”€â”€ tests/                  # Tests
-â”œâ”€â”€ scripts/                # Run scripts
-â”œâ”€â”€ .github/workflows/      # GitHub Actions
-â”œâ”€â”€ dvc.yaml               # DVC pipeline
-â”œâ”€â”€ Dockerfile             # Docker configuration
-â””â”€â”€ requirements.txt       # Dependencies
-`
-
-## Installation and Setup
-
-### 1. Clone Repository
-`ash
+Установка и настройка
+1. Клонирование репозитория
 git clone https://github.com/sstanna/credit-default-prediction.git
 cd credit-default-prediction
-`
 
-### 2. Install Dependencies
-`ash
+2. Установка зависимостей
 pip install -r requirements.txt
-`
 
-### 3. Prepare Data
-`ash
+3. Подготовка данных
 python -m src.data.load_data
-`
 
-### 4. Train Model
-`ash
+4. Обучение модели
 python scripts/train_models.py
-`
 
-### 5. Run API
-`ash
+5. Запуск API
 python scripts/run_api.py
-# or
+# или
 uvicorn src.api.app:app --host 0.0.0.0 --port 8000
-`
 
-### 6. Run Tests
-`ash
+6. Запуск тестов
 pytest tests/ -v
-`
 
-### 7. Monitor Drift
-`ash
+7. Мониторинг дрейфа данных
 python scripts/monitor_drift.py
-`
 
-### 8. Docker Run
-`ash
+8. Запуск через Docker
 docker build -t credit-default-api .
 docker run -p 8000:8000 credit-default-api
-`
 
-## Project Components
+Компоненты проекта
+1. Подготовка и валидация данных
 
-### 1. Data Preparation and Validation
-- Data loading from UCI ML Repository
-- Feature Engineering (aggregated features, binning)
-- Validation with Great Expectations
+Загрузка данных с UCI Repository
 
-### 2. Model Training
-- Sklearn Pipeline with preprocessing
-- Automatic hyperparameter tuning
-- Metrics: ROC-AUC, Precision, Recall, F1-Score
+Генерация и агрегирование признаков
 
-### 3. Experimentation
-- MLflow Tracking for experiment logging
-- Model and data versioning with DVC
+Валидация данных с помощью Great Expectations
 
-### 4. Testing and CI/CD
-- Unit tests with pytest
-- GitHub Actions for automated testing
-- Linting with flake8 and formatting with black
+2. Обучение модели
 
-### 5. Deployment
-- FastAPI REST API
-- Docker containerization
-- Data drift monitoring
+Использование Sklearn Pipeline
 
-## API Endpoints
+Автоматический подбор гиперпараметров
 
-- GET / - API information
-- POST /predict - Default prediction
-- GET /health - Health check
-- POST /predict_batch - Batch prediction
-- GET /model_info - Model information
+Метрики: ROC-AUC, Precision, Recall, F1-Score
 
-## API Usage Example
+3. Эксперименты и трекинг
 
-`python
+Логирование экспериментов через MLflow
+
+Версионирование данных и моделей с DVC
+
+4. Тестирование и CI/CD
+
+Юнит-тесты через pytest
+
+Автоматизация тестов с GitHub Actions
+
+Линтинг и форматирование с помощью flake8 и black
+
+5. Развёртывание и мониторинг
+
+REST API на FastAPI
+
+Контейнеризация в Docker
+
+Мониторинг дрейфа данных через PSI
+
+API Эндпоинты
+Метод	Эндпоинт	Описание
+GET	/	Информация об API
+POST	/predict	Прогноз вероятности дефолта
+GET	/health	Проверка статуса API
+POST	/predict_batch	Пакетное предсказание
+GET	/model_info	Информация о модели
+Пример использования API
 import requests
 
 url = "http://localhost:8000/predict"
@@ -142,61 +133,44 @@ data = {
 
 response = requests.post(url, json=data)
 print(response.json())
-`
 
-## Monitoring
-
-Script src/monitoring/drift_monitor.py tracks data drift and calculates Population Stability Index (PSI).
-
-`python
+Мониторинг дрейфа данных
 from src.monitoring.drift_monitor import DataDriftMonitor
 
 monitor = DataDriftMonitor(reference_data)
 report = monitor.generate_drift_report(new_data)
-`
 
-## MLflow Tracking
+MLflow Трекинг
 
-Start MLflow UI:
-`ash
+Запуск интерфейса MLflow:
+
 mlflow ui
-`
 
-Open http://localhost:5000 in browser to view experiments.
 
-## DVC Pipeline
+Откройте http://localhost:5000
+ для просмотра экспериментов.
 
-Run pipeline:
-`ash
+DVC Pipeline
+
+Запуск всего конвейера:
+
 dvc repro
-`
 
-## Testing
-
-Run all tests:
-`ash
+Тестирование и проверка качества
 pytest tests/ -v --cov=src
-`
-
-Run linting:
-`ash
 flake8 src tests
 black src tests
-`
 
-## Results
+Результаты
 
-- **Dataset:** 30,000 records successfully processed
-- **Target variable:** 22.12% defaults (6,636 out of 30,000)
-- **Feature Engineering:** 4 new features created
-- **Models:** 3 algorithms trained with hyperparameters
-- **API:** REST API ready for production use
-- **Monitoring:** PSI drift detector implemented
+Обработано записей: 30,000
 
-## Author
+Доля дефолтов: 22.12% (6,636 клиентов)
 
-ML Engineer - Credit Department (sstanna)
+Создано признаков: 4 новых
 
-## License
+Обучено моделей: 3 с оптимизацией гиперпараметров
 
-MIT License
+API: Готово к продакшену
+
+Мониторинг: Реализован PSI-дрейф детектор
